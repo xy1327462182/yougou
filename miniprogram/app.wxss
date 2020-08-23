@@ -1,0 +1,10 @@
+@import './style/iconfont.wxss' ;
+/* 初始化样式 */
+page,view,text,swiper,swiper-item,navigator,image{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+image{
+    width: 100%;
+}

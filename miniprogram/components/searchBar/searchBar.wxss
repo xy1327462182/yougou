@@ -1,0 +1,16 @@
+.searchBar {
+  width: 100%;
+  height: 90rpx;
+  padding: 14rpx;
+  background-color: #ff5372;
+}
+.searchBar .search-url {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+}

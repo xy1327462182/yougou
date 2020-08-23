@@ -1,0 +1,77 @@
+.index_swiper{
+    width: 750rpx;
+    height: 340rpx;
+    swiper{
+        width: 100%;
+        height: 100%;
+        swiper-item{
+            width: 100%;
+            height: 100%;
+            border-bottom-left-radius: 14rpx;
+            border-bottom-right-radius: 14rpx;
+            overflow: hidden;
+        }
+        .banner-image{
+            width: 750rpx;
+        }
+    }
+}
+
+.index_category{
+    width: 96%;
+    align-self: center;
+    display: flex;
+    flex-flow: row nowrap;
+    navigator{
+        padding: 28rpx;
+        flex: 1;
+        image{
+            width: 100%;
+        }
+    }
+}
+
+.index_floor{
+    width: 100%;
+    .floor_item{
+        width: 100%;
+        .floor_title{
+            width: 100%;
+            image{
+                width: 100%;
+            }
+        }
+        // 232 /  386 ==  vw  33.33 /  h
+        // h = vw33.33 * 232  / 386
+        .floor_content{
+            overflow: hidden;
+            width: 100%;
+            navigator{
+                float: left;
+                width: 33.33%;
+                border: 6rpx solid #fff;
+                &:nth-child(1){
+                    height: 33.33vw * 386 / 232;
+                }
+                &:nth-child(2) {
+                    height: 33.33vw * 386 / 232 / 2;
+                }
+                &:nth-child(3) {
+                    height: 33.33vw * 386 / 232 / 2;
+                }
+                &:nth-child(4) {
+                    height: 33.33vw * 386 / 232 / 2;
+                }
+                &:nth-child(5) {
+                    height: 33.33vw * 386 / 232 / 2;
+                }
+                image{
+                    width: 100%;
+                    height: 100%;
+                }
+                
+            }
+            
+        }
+    }
+}
