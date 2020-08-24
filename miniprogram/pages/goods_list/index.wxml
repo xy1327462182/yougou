@@ -1,2 +1,27 @@
-<!--pages/goods_list/index.wxml-->
-<text>pages/goods_list/index.wxml</text>
+<!-- 搜索框模块 -->
+<searchBar></searchBar>
+
+<!-- Tabs组件 -->
+<Tabs tabs="{{tabs}}" binditemChange="handelItemChange">
+  <block wx:if="{{tabs[0].isActive}}">
+    <view class="tabs_content_first">
+      <navigator 
+      wx:for="{{goodsList}}"
+      wx:key="goods_id"
+      class="tabs_item"
+      >
+        <view class="item_img_wrap">
+          <image src="{{item.goods_small_logo?item.goods_small_logo:'https://ww1.sinaimg.cn/large/007rAy9hgy1g24by9t530j30i20i2glm.jpg'}}" 
+          mode="widthFix" class="item_img"></image>
+        </view>
+        <view class="item_info_wrap">
+          <view class="item_title">{{item.goods_name}}</view>
+          <view class="item_price">￥{{item.goods_price}}</view>
+        </view>
+      </navigator>
+    </view>
+  
+  </block>
+  <block wx:elif="{{tabs[1].isActive}}">1</block>
+  <block wx:elif="{{tabs[2].isActive}}">2</block>
+</Tabs>

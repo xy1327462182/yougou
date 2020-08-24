@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "searchBar": "../../components/searchBar/searchBar",
+    "Tabs": "../../components/Tabs/Tabs"
+  },
+  "navigationBarTitleText": "列表页"
 }
