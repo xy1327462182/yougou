@@ -1,0 +1,10 @@
+<view class="tabs">
+  <view class="tabs_title">
+    <view class="tabs_title_item"></view>
+  </view>
+
+  <view class="tabs_content">
+    "listTabsTitle"
+  </view>
+
+</view>

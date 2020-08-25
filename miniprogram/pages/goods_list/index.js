@@ -33,6 +33,7 @@ Page({
     pagenum: 1,
     pagesize: 10
   },
+  totalPages: 1,
 
   //标题点击事件
   handelItemChange(e) {
@@ -53,8 +54,15 @@ Page({
     let res=await request({
       url: "https://api-hmugo-web.itheima.net/api/public/v1/goods/search",data:this.QueryParams
     })
+    //总页数
+    this.totalPages=Math.ceil(res.data.message.total / this.QueryParams.pagesize)
+    
     this.setData({
-      goodsList: res.data.message.goods
+      goodsList: [...this.data.goodsList, ...res.data.message.goods]
+    })
+
+    wx.stopPullDownRefresh({
+      success: (res) => {},
     })
   },
 
@@ -98,14 +106,31 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    //数据清空
+    this.setData({
+      goodsList: []
+    })
+    //页码设置为1
+    this.QueryParams.pagenum=1
 
+    //重新发送请求
+    this.getGoodsData()
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (this.QueryParams.pagenum >= this.totalPages) {
+      //没下一页了
+      wx.showToast({
+        title: '到底了，没有商品了',
+        icon: "none"
+      })
+    } else {
+      this.QueryParams.pagenum++
+      this.getGoodsData()
+    }
   },
 
   /**

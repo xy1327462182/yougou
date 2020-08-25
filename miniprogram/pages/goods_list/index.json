@@ -3,5 +3,7 @@
     "searchBar": "../../components/searchBar/searchBar",
     "Tabs": "../../components/Tabs/Tabs"
   },
-  "navigationBarTitleText": "列表页"
+  "navigationBarTitleText": "列表页",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark"
 }
