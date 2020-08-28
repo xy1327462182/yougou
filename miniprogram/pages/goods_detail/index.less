@@ -1,0 +1,111 @@
+.goods_details_page{
+    padding-bottom: 90rpx;
+    swiper{
+        width: 100%;
+        height: 67vw;
+        text-align: center;
+        .pic{
+            width: 66%;
+        }
+    }
+    .goods_price{
+        color: #ff5372;
+        font-size: 38rpx;
+        font-weight: 580;
+        padding: 12rpx;
+    }
+    .goods_title_wrap{
+        display: flex;
+        flex-flow: row nowrap;
+        .goods_name{
+            font-size: 32rpx;
+            flex: 6;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            margin: 8rpx 0;
+            padding: 0rpx 12rpx;
+        }
+        .goods_collect-wrap{
+            flex: 1;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+            border-left: 4rpx solid #ccc;
+            padding: 0 6rpx;
+            .shoucangico{
+                font-size: 34rpx;
+            }
+            .goods_collect{
+                font-size: 26rpx;
+            }
+        }
+    }
+    
+    .goods_info{
+        .goods_info_title{
+            font-size: 34rpx;
+            color: #ff5372;
+            font-weight: 700;
+            margin: 12rpx;
+            background-color: #fff;
+            border-top: 8rpx solid #efefef;
+            padding: 8rpx 0;
+        }
+    }
+    
+    .btm_tools{
+        position: fixed;
+        width: 100%;
+        height: 90rpx;
+        left: 0;
+        bottom: 0;
+        background-color: #fff;
+        border-top: 2rpx solid #ccc;
+        display: flex;
+        .tool_item{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 26rpx;
+            position: relative;
+            .iconfont{
+                font-size: 36rpx;
+            }
+            button{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+            }
+        }
+        .add_shopcar{
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffa500;
+            color: #fff;
+            font-weight: 550;
+            font-size: 26rpx;
+        }
+        .buy{
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #eb4450;
+            color: #fff;
+            font-weight: 550;
+            font-size: 26rpx;
+        }
+    }
+}

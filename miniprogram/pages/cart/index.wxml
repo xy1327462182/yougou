@@ -1,2 +1,8 @@
-<!--pages/cart/index.wxml-->
-<text>pages/cart/index.wxml</text>
+<view class="address_wrap">
+  <button 
+  class="add_address" 
+  type="primary" 
+  plain
+  bindtap="handelAddressAdd"
+  >添加收货地址</button>
+</view>

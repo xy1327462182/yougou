@@ -73,7 +73,21 @@
 					"id": 2,
 					"name": "商品列表页",
 					"pathName": "pages/goods_list/index",
-					"query": "cid=5",
+					"query": "cid=10",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品详情页",
+					"pathName": "pages/goods_detail/index",
+					"query": "goods_id=9832",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "购物车",
+					"pathName": "pages/cart/index",
+					"query": "",
 					"scene": null
 				}
 			]

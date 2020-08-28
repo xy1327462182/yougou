@@ -1,2 +1,65 @@
-<!--pages/goods_detail/index.wxml-->
-<text>pages/goods_detail/index.wxml</text>
+<view class="goods_details_page">
+
+  <!-- 轮播图模块 -->
+  <view class="carousel">
+    <swiper indicator-dots autoplay	circular>
+      <swiper-item 
+      class="pic_wrap"
+      wx:for="{{goodsDetails.pics}}"
+      wx:key="pics_id"
+      bindtap="handelPicTap"
+      data-src="{{item.pics_mid}}"
+      >
+        <image src="{{item.pics_mid}}" mode="widthFix" class="pic"></image>
+      </swiper-item>
+    </swiper>
+  </view>
+
+  <!-- 商品价格名称详情等模块 -->
+  <view class="goods_price">￥{{goodsDetails.goods_price}}</view>
+  <view class="goods_title_wrap">
+    <view class="goods_name">{{goodsDetails.goods_name}}{{goodsDetails.goods_name}}</view>
+    <view class="goods_collect-wrap">
+      <text class="iconfont icon-shoucang1 shoucangico"></text>
+      <text class="goods_collect">收藏</text>
+    </view>
+  </view>
+
+  <!-- 商品详情 -->
+  <view class="goods_info">
+    <view class="goods_info_title">图文详情</view>
+    <view class="goods_info_content">
+      <rich-text nodes="{{goodsDetails.goods_introduce}}"></rich-text>
+    </view>
+  </view>
+
+  <!-- 底部工具栏模块 -->
+  <view class="btm_tools">
+
+    <view class="tool_item">
+      <view class="iconfont icon-kefu"></view>
+      <view>客服</view>
+      <button open-type="contact"></button>
+    </view>
+
+    <view class="tool_item">
+      <view class="iconfont icon-iconzhengli_fenxiang"></view>
+      <view>分享</view>
+      <button open-type="share"></button>
+    </view>
+
+    <navigator class="tool_item" url="/pages/cart/index" open-type="switchTab">
+      <view class="iconfont icon-gouwuche"></view>
+      <view>购物车</view>
+    </navigator>
+      
+    <view class="tool_item add_shopcar" bindtap="handelAddCart">
+      <view>加入购物车</view>
+    </view>
+
+    <view class="tool_item buy">
+      <view>立即购买</view>
+    </view>
+
+  </view>
+</view>

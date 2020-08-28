@@ -1,1 +1,6 @@
-/* pages/cart/index.wxss */
+.address_wrap {
+  padding: 20rpx;
+}
+.address_wrap button {
+  width: 50%;
+}
