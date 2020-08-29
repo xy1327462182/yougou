@@ -65,6 +65,7 @@ Page({
       //数组没有本商品
       //商品数量设置为1
       this.data.goodsDetails.num = 1
+      this.data.goodsDetails.checked = true
       //添加到购物车数组中
       cart.push(this.data.goodsDetails)
     } else {

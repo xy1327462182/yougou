@@ -1,3 +1,7 @@
+//引入promise 化 api
+import { getSetting,openSetting,chooseAddress,showModal } from "../../utils/asyncWx"
+
+
 // pages/cart/index.js
 Page({
 
@@ -5,7 +9,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    address: {},
+    cart: [],
+    allChecked: true,
+    totalPrice: 0,
+    totalNum: 0
   },
 
   /*添加收货地址按钮
@@ -21,36 +29,113 @@ Page({
   3.用户未点击按钮
     authSetting scope.address值为undefined
   */
-  handelAddressAdd(e){
-    // wx.chooseAddress({
-    //   success: (res) => {
-    //     console.log(res)
-    //   }
-    // })
-
-    wx.getSetting({
-      success(res1){
-        if (res1.authSetting['scope.address'] || res1.authSetting['scope.address'] == undefined) {
-          //直接调用wx.chooseAddress()
-          wx.chooseAddress({
-            success: (res2) => {
-              console.log(res2)
-            },
-          })
-        } else {
-          //调用wx.openSetting() 引导用户授权
-          wx.openSetting({
-            success(res3){
-              if (res3.authSetting['scope.address']) {
-                //如果用户更改授权状态为true再调用wx.chooseAddress()
-                wx.chooseAddress()
-              }
-            }
-          })
+  async handelAddressAdd(e){
+    try{
+      //获取用户授权的状态
+      let res1=await getSetting()
+      if (res1.authSetting['scope.address']==false) {
+        //如果没授权 引导用户授权
+        let res2=await openSetting()
+        //如果用户成功授权
+        if (res2.authSetting['scope.address']) {
+          //选择收货地址
+          let res3=await chooseAddress()
+          wx.setStorageSync('address', res3)
         }
-        
+      } else {
+        //直接调用选择收货地址
+        let res4=await chooseAddress()
+        wx.setStorageSync('address', res4)
       }
+    }catch(e){
+      console.log(e)
+    }
+  },
+
+  //复选框更换事件
+  handelCheckedChange(e){
+    //1.获取点击的事件源对象
+    let goods_id=e.currentTarget.dataset.id
+    let cart=this.data.cart
+    //2.获取索引
+    let index=cart.findIndex(v=>v.goods_id===goods_id)
+    //3.checked属性取反
+    cart[index].checked=!cart[index].checked
+    //5.重新计算 底部工具栏中的数据
+    this.setCart(cart)
+  },
+
+  //全选和反选事件
+  handelAllChecked(){
+    //获取data中原来allChecked属性 cart数组
+    let {allChecked,cart}=this.data
+    //allChecked取反
+    allChecked=!allChecked
+    //遍历数组 每一个商品选中状态跟随全选状态改变
+    cart.forEach(v=>v.checked=allChecked)
+    //更新数据 存入缓存
+    this.setData({
+      allChecked
     })
+    this.setCart(cart)
+  },
+
+  //商品数量编辑事件
+  async handelNumEdit(e){
+    let that=this
+    //1.获取商品id 对数量的操作
+    let {id,edit}=e.currentTarget.dataset
+    //2.获取cart数组
+    let {cart}=this.data
+    //3.获取商品索引
+    let index=cart.findIndex(v=>v.goods_id==id)
+    //3.5 判断是否删除商品
+    if (cart[index].num===1 && edit===-1) {
+      let res=await showModal({
+        content: "是否删除本商品？"
+      })
+      if (res.confirm) {
+        //删除商品
+        cart.splice(index,1)
+        //更新数据
+        that.setCart(cart)
+      }
+    } else {
+      //4.修改数量
+      cart[index].num += edit
+      //5.重新设置回数据
+      this.setCart(cart)
+    }
+    
+  },
+
+  setCart(cart){
+    let totalPrice=0
+    let totalNum=0
+    let allChecked=true
+
+    //遍历cart 得到allChecked totalPrice totalNum最终状态
+    if (cart.length>0) {
+      cart.forEach((v)=>{
+        if (v.checked) {
+          totalPrice += v.goods_price * v.num
+          totalNum += v.num
+        } else {
+          allChecked=false
+        }
+      })
+    } else if (cart.length==0) {
+      allChecked=false
+    }
+    //更新数据
+    this.setData({
+      cart,
+      allChecked,
+      totalNum,
+      totalPrice
+    })
+    //存入缓存中
+    wx.setStorageSync('cart', cart)
   },
 
   /**
@@ -71,7 +156,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    //获取缓存中的地址数据 判断是否已有收货地址
+    let address=wx.getStorageSync('address')
 
+    //获取缓存中购物车商品数据 没有为空数组
+    let cart=wx.getStorageSync('cart')||[]
+    //如果有地址数据 将地址数据添加data属性然后，放到data中
+    if (address.userName) {
+      address.all=address.provinceName+address.cityName+address.countyName+address.detailInfo 
+    }
+    //计算工具栏中数据 存入缓存 存入数据data
+    this.setCart(cart)
   },
 
   /**
