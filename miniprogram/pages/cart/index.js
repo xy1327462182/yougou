@@ -1,5 +1,5 @@
 //引入promise 化 api
-import { getSetting,openSetting,chooseAddress,showModal } from "../../utils/asyncWx"
+import { getSetting,openSetting,chooseAddress,showModal,showToast } from "../../utils/asyncWx"
 
 
 // pages/cart/index.js
@@ -39,13 +39,15 @@ Page({
         //如果用户成功授权
         if (res2.authSetting['scope.address']) {
           //选择收货地址
-          let res3=await chooseAddress()
-          wx.setStorageSync('address', res3)
+          let address=await chooseAddress()
+          //如果有地址数据 将地址数据添加all属性然后，放到data中
+          this.setAddress(address)
         }
       } else {
         //直接调用选择收货地址
-        let res4=await chooseAddress()
-        wx.setStorageSync('address', res4)
+        let address=await chooseAddress()
+        //如果有地址数据 将地址数据添加all属性然后，放到data中
+        this.setAddress(address)
       }
     }catch(e){
       console.log(e)
@@ -109,6 +111,25 @@ Page({
     
   },
 
+  //点击支付事件
+  async handelPay(){
+    let {address,totalNum}=this.data
+    //1.如果没收货地址
+    if (!address.userName) {
+      await showToast({title:"您还没有添加收货地址！"})
+    }
+    //2.如果没有选购商品
+    else if (totalNum===0) {
+      await showToast({title:"您还没有选购商品！"})
+    }
+    //3.条件都满足 跳转到支付页面
+    else {
+      wx.navigateTo({
+        url: '/pages/pay/index'
+      })
+    }
+  },
+
   setCart(cart){
     let totalPrice=0
     let totalNum=0
@@ -138,6 +159,17 @@ Page({
     wx.setStorageSync('cart', cart)
   },
 
+  setAddress(address){
+    //如果有地址数据 将地址数据添加all属性然后，放到data中
+    if (address.userName) {
+      address.all=address.provinceName+address.cityName+address.countyName+address.detailInfo 
+    }
+    wx.setStorageSync('address', address)
+    this.setData({
+      address
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -161,10 +193,8 @@ Page({
 
     //获取缓存中购物车商品数据 没有为空数组
     let cart=wx.getStorageSync('cart')||[]
-    //如果有地址数据 将地址数据添加data属性然后，放到data中
-    if (address.userName) {
-      address.all=address.provinceName+address.cityName+address.countyName+address.detailInfo 
-    }
+    //如果有地址数据 将地址数据添加all属性然后，放到data中
+    this.setAddress(address)
     //计算工具栏中数据 存入缓存 存入数据data
     this.setCart(cart)
   },

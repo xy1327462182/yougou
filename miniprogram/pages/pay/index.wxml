@@ -1,2 +1,45 @@
-<!--pages/pay/index.wxml-->
-<text>pages/pay/index.wxml</text>
+<!-- 地址部分 -->
+<view class="address_row">
+	<view class="address_uname_row">
+		<view class="address_uname">收件人：{{address.userName}}</view>
+		<view class="address_phone">{{address.telNumber}}</view>
+	</view>
+	<view class="address_detail">{{address.all}}</view>
+</view>
+
+<!-- 购物车内容部分 -->
+<!-- 头部 -->
+<view class="cart_main">
+	<view class="cart_content">
+			<view class="cart_item" wx:for="{{cart}}" wx:key="goods_id">
+				
+				<navigator class="cart_item_img">
+					<image mode="widthFix" src="{{item.pics[0].pics_sma}}"></image>
+				</navigator>
+
+				<view class="cart_item_info">
+					<view class="goods_name">{{item.goods_name}}</view>
+					<view class="goods_price_wrap">
+						<view class="goods_price">￥{{item.goods_price}}</view>
+						<view class="goods_count_tool">
+							<view class="num_count">X {{item.num}}</view>
+						</view>
+					</view>
+				</view>
+
+			</view>
+	</view>
+</view>
+
+<!-- 底部结算工具栏部分 -->
+<view class="pay_tools">
+
+	<view class="total_price_wrap">
+		<view class="total_price">合计：<text class="total_price_txt">￥{{totalPrice}}</text></view>
+		<view class="yunfei">包含运费</view>
+	</view>
+
+	<view class="pay_wrap">
+		<view class="pay">支付({{totalNum}})</view>
+	</view>
+</view>
